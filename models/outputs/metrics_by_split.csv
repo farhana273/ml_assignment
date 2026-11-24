@@ -1,0 +1,16 @@
+split,model,MAE,RMSE,n
+covid,GradientBoosting,9.157,11.809,210.0
+covid,Lasso,9.086,11.755,210.0
+covid,Naive,8.652,11.234,210.0
+covid,RandomForest,8.973,11.717,210.0
+covid,Ridge,9.082,11.742,210.0
+test,GradientBoosting,3.474,6.463,823.0
+test,Lasso,3.705,6.748,823.0
+test,Naive,5.813,10.536,823.0
+test,RandomForest,3.487,6.352,823.0
+test,Ridge,3.715,6.756,823.0
+val,GradientBoosting,1.902,3.513,421.0
+val,Lasso,1.901,3.409,421.0
+val,Naive,2.161,5.162,421.0
+val,RandomForest,1.852,3.455,421.0
+val,Ridge,1.904,3.408,421.0
