@@ -1,0 +1,11 @@
+,Ridge,Lasso,Random Forest,Gradient Boosting
+gdp_growth,0.649,0.639,0.634,0.515
+inflation,0.0,0.0,0.009,-0.005
+unemployment,-0.001,0.0,-0.002,0.019
+trade,0.004,0.0,0.0,-0.004
+investment,0.006,0.001,-0.001,0.002
+population_growth,0.028,0.025,0.006,0.051
+government_debt,-0.004,0.0,0.007,-0.006
+current_account,-0.001,0.0,0.0,-0.01
+gdp_growth_lag1,0.038,0.035,-0.006,-0.004
+gdp_growth_avg3,0.021,0.03,0.138,0.154

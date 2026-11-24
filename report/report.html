@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Can a Model Beat the IMF? Forecasting Next-Year GDP Growth</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 16mm 15mm; }
+  :root {
+    --ink: #0b0b0b; --ink2: #3d3c39; --muted: #6b6a66; --rule: #d9d8d2; --accent: #2a78d6; --tint: #eef4fc;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0; color: var(--ink); background: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11pt; line-height: 1.3; hyphens: auto; -webkit-hyphens: auto;
+  }
+  header { margin-bottom: 4mm; }
+  h1 { font-size: 19pt; line-height: 1.12; margin: 0 0 1.5mm; letter-spacing: -0.2pt; }
+  .subtitle { font-size: 12pt; color: var(--ink2); margin: 0 0 2.5mm; }
+  .byline { font-size: 11pt; color: var(--ink2); margin: 0; }
+  .byline a { color: var(--accent); text-decoration: none; }
+  .rule { height: 2px; background: var(--accent); width: 18mm; margin: 3mm 0 3.5mm; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 11pt; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-weight: 700; padding: 1.2mm 2mm 1.2mm 0; border-bottom: 1px solid var(--ink); }
+  td { padding: 1mm 2mm 1mm 0; vertical-align: top; border-bottom: 1px solid var(--rule); }
+  tr:last-child td { border-bottom: none; }
+  td.n, th.n { text-align: right; padding-right: 0; padding-left: 2mm; }
+  .best { font-weight: 700; }
+  .roles { margin-bottom: 4mm; }
+  .roles td:first-child { white-space: nowrap; font-weight: 700; padding-right: 4mm; }
+
+  .abstract { background: var(--tint); padding: 3mm 4mm; margin: 0 0 4.5mm; }
+  .abstract b { color: var(--accent); }
+
+  main { column-count: 2; column-gap: 7mm; column-fill: balance; }
+  h2 { font-size: 12pt; margin: 3.2mm 0 1.2mm; break-after: avoid; }
+  h2 .no { color: var(--accent); margin-right: 1.5mm; }
+  p { margin: 0 0 2mm; text-align: left; orphans: 3; widows: 3; }
+  .lead { font-weight: 700; }
+
+  figure { column-span: all; margin: 1mm 0 3mm; break-inside: avoid; }
+  figure img { display: block; width: 100%; }
+  figure img.w85 { width: 85%; } figure img.w80 { width: 80%; } figure.narrow img { width: 54%; }
+  .roles td:first-child, .roles th:first-child { width: 30%; }
+  .t2 td:first-child { white-space: nowrap; }
+  .refs li { overflow-wrap: anywhere; }
+  figcaption { font-size: 11pt; color: var(--ink2); margin-top: 1.5mm; }
+  figcaption b { color: var(--ink); }
+  .tbl { break-inside: avoid; margin: 1mm 0 3mm; }
+  .tbl .cap { font-size: 11pt; color: var(--ink2); margin: 0 0 1mm; }
+
+  .todo { background: #fff4cc; border-left: 3px solid #e0a800; padding: 1.5mm 2.5mm; margin: 0 0 2mm; font-size: 11pt; }
+  .refs { column-span: all; margin-top: 3mm; border-top: 1px solid var(--rule); padding-top: 2mm; }
+  .refs h2 { margin-top: 0; }
+  .refs ol { margin: 0; padding-left: 5mm; columns: 2; column-gap: 7mm; font-size: 11pt; }
+  .refs li { margin-bottom: 1.2mm; break-inside: avoid; }
+  a { color: var(--accent); }
+  code { hyphens: none; -webkit-hyphens: none; font-size: 11pt; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Can a Model Beat the IMF?</h1>
+  <div class="rule"></div>
+</header>
+
+<table class="roles">
+  <tr><th>Member</th><th>Contribution</th></tr>
+  <tr><td>Farhana Ahmed</td><td>Data integration (World Bank and IMF), target definition, time-based splits, IMF benchmark; Problem and Data sections</td></tr>
+  <tr><td>Sami Haroon Khan</td><td>Preprocessing pipeline, baselines and four models, tuning and validation, backtest and bootstrap, 2026-27 forecasts and scenarios; Methods and Results sections</td></tr>
+  <tr><td>Sukesh Babu Ramesh Babu</td><td>Exploratory data analysis: missingness, distributions, outliers, correlations and hypothesis tests; EDA findings</td></tr>
+  <tr><td>Parthiban Sathappan Tamilselvi</td><td>Literature review, error analysis by region and income group, discussion, limitations and ethics</td></tr>
+</table>
+
+<div class="abstract w">
+  <b>Abstract.</b> Each autumn the IMF forecasts next year's growth for almost every economy. Can a compact model fed ten public indicators do as well? Using World Bank and IMF data for 217 economies (2000-2024), we compared four machine learning models with three simple benchmarks under year-based validation. In ordinary years the models cut error by about 10%. At turning points such as 2009 and 2021, every method failed.
+</div>
+
+<main class="w">
+
+<h2><span class="no">1</span>The question</h2>
+<p>A growth forecast quietly shapes big decisions: budgets, interest rates, where a family's savings go. The IMF's World Economic Outlook is the reference forecast, built with expert judgement. We ask something narrower and testable: from this year's published indicators alone, can a model predict next year's real GDP growth better than simple benchmarks and the IMF? We score forecasts by mean absolute error (MAE) in percentage points, with RMSE as a second view.</p>
+
+<h2><span class="no">2</span>Data</h2>
+<p>We merged the World Bank World Development Indicators with the IMF World Economic Outlook (October 2026) into one panel: 217 economies, input years 2000-2023, next year's growth as the target, and eight indicators (Table 1). The data are uneven: investment is missing for 21% of rows and trade for 18%, mostly in small economies. Tails are heavy, with inflation up to 514%. This year's growth is the strongest single correlate of next year's (r = 0.21).</p>
+
+<div class="tbl">
+  <p class="cap"><b>Table 1.</b> The ten model features.</p>
+  <table>
+    <tr><th>Feature</th><th>Source</th></tr>
+    <tr><td>GDP growth, inflation, unemployment, trade, investment, population growth</td><td>World Bank</td></tr>
+    <tr><td>Government debt, current account</td><td>IMF</td></tr>
+    <tr><td>Last year's growth, 3-year average growth</td><td>Built from history</td></tr>
+  </table>
+</div>
+
+<h2><span class="no">3</span>What others found</h2>
+<p>Chu and Qureshi (2023) ran a horse race of machine and deep learning methods for US GDP growth, with recursive out-of-sample evaluation over several sub-periods; we borrow that design for our backtest. Oo, Lin and Kakinaka (2025) apply machine learning to longer growth projections, which motivates our 2027 scenarios. Most such work studies one country; we pool 217 economies.</p>
+<p class="todo">Parthiban: add two or three papers (crisis-period forecasting, cross-country panels), one sentence each on method and finding.</p>
+
+<h2><span class="no">4</span>How we built it</h2>
+<p><span class="lead">Leakage first.</span> Splits follow the target year: training 2001-2017, validation 2018-2019, test 2021-2024, and 2020 alone as a COVID stress test.</p>
+<p><span class="lead">Features.</span> Eight indicators plus last year's growth and a three-year average give ten features. Gaps take the country's last earlier value, then the training median; features are clipped at training percentiles 1 and 99. A scikit-learn pipeline fits imputer and scaler on training rows only.</p>
+<p><span class="lead">Models.</span> Three benchmarks set the bar: naive persistence (next year equals this year), the global mean and each country's own mean. We fit Ridge for correlated indicators, Lasso for feature selection, Random Forest for non-linear effects, and Gradient Boosting with Huber loss to resist outliers, tuned on 2018-2019 and refit on 2001-2019.</p>
+<p><span class="lead">Robustness.</span> An expanding-window backtest re-forecasts every year from 2008 to 2024 from earlier data only, and a bootstrap over whole countries tests whether gaps are real.</p>
+
+<figure>
+  <img class="w80" src="../models/outputs/figures/mae_by_model.png" alt="Bar charts of mean absolute error for three baselines and four models, on validation and test years">
+  <figcaption><b>Figure 1.</b> Forecast error by method. Every model beats every benchmark on validation; on the test years the global mean edges ahead.</figcaption>
+</figure>
+
+<h2><span class="no">5</span>What happened</h2>
+<p>On validation every model beats every benchmark; Random Forest is best (MAE 1.85 against 2.16 for naive). The test years are humbler: the plain global mean (3.35) edges past Gradient Boosting (3.47).</p>
+<p>The backtest explains why (Figure 2). Across 2008-2019 a model is the most accurate method in nine of twelve years, with MAE 2.80 against 3.11 for the best benchmark; the bootstrap interval excludes zero (-0.31 points, 95% CI -0.48 to -0.17). The test-period tie comes from one year, 2021. Random Forest and Gradient Boosting cannot be separated: the random seed alone moves Random Forest between 3.47 and 3.52. This year's growth carries most of the signal, and Lasso drops four indicators (Figure 3).</p>
+<p class="todo">Farhana: add the IMF historical forecast comparison here (same rows, MAE) once the benchmark file is in the repo.</p>
+
+<div class="tbl t2">
+  <p class="cap"><b>Table 2.</b> MAE (percentage points); best in bold.</p>
+  <table>
+    <tr><th>Method</th><th class="n">Val. 18-19</th><th class="n">Test 21-24</th><th class="n">Back. 08-19</th></tr>
+    <tr><td>Naive</td><td class="n">2.16</td><td class="n">5.81</td><td class="n">3.28</td></tr>
+    <tr><td>Global mean</td><td class="n">2.51</td><td class="n best">3.35</td><td class="n">3.28</td></tr>
+    <tr><td>Country mean</td><td class="n">2.38</td><td class="n">3.54</td><td class="n">3.11</td></tr>
+    <tr><td>Ridge</td><td class="n">1.90</td><td class="n">3.72</td><td class="n">2.81</td></tr>
+    <tr><td>Random Forest</td><td class="n best">1.85</td><td class="n">3.49</td><td class="n best">2.79</td></tr>
+    <tr><td>Gradient Boosting</td><td class="n">1.90</td><td class="n">3.47</td><td class="n">2.80</td></tr>
+  </table>
+</div>
+
+<figure>
+  <img class="w85" src="../models/outputs/figures/backtest_by_year.png" alt="Line chart of yearly forecast error from 2008 to 2024 for models and baselines">
+  <figcaption><b>Figure 2.</b> Expanding-window backtest. Each year is forecast with a model trained only on earlier years.</figcaption>
+</figure>
+
+<h2><span class="no">6</span>Where it breaks</h2>
+<p>Errors cluster at turning points. In 2021 the models trusted the 2020 collapse: for India they predicted about 1% growth when the economy grew 9.7%, while India's own average said 6.6%. Ireland fails differently: multinational accounting swung measured growth from 7.5% to -2.5% in 2023. Annual indicators capture momentum, not shocks.</p>
+<p class="todo">Parthiban: add error by income group and region (models/outputs/predictions_all_models.csv).</p>
+<p>Limitations: we use today's revised data, not what forecasters knew then; income groups are current; and annual data gives only about 3,500 training rows.</p>
+
+<figure class="narrow">
+  <img src="../models/outputs/figures/feature_importance.png" alt="Horizontal bars showing feature importance; this year's GDP growth dominates">
+  <figcaption><b>Figure 3.</b> Which inputs matter: rise in validation MAE when each feature is shuffled (Gradient Boosting).</figcaption>
+</figure>
+
+<h2><span class="no">7</span>Looking ahead</h2>
+<p>Our team comes from India, Pakistan and Bangladesh and studies in Ireland, so we ended where the data meets home. From real 2025 data, Gradient Boosting forecasts 2026 growth of 6.5% for India, 3.0% for Pakistan, 3.2% for Bangladesh and 4.4% for Ireland, close to the IMF except for Ireland (IMF: -1.0%; Figure 4). Weighted by GDP, our world forecast is 3.3% (IMF: 3.1%). 2027 needs assumed 2026 inputs, so the notebook exposes each assumption; a global slowdown cuts India's 2027 forecast from 6.1% to 4.5%. Past errors put an 80% band of about ±4 points around every number.</p>
+
+<figure>
+  <img src="../models/outputs/figures/regions_2026_2027.png" alt="Eight small charts of GDP growth from 2016 with our 2026-27 forecasts and IMF projections for the World, European Union, United States, China, India, Pakistan, Bangladesh and Ireland">
+  <figcaption><b>Figure 4.</b> Eight economies at a glance. World and EU combine our country forecasts using GDP (PPP) weights, as the IMF does.</figcaption>
+</figure>
+
+<h2><span class="no">8</span>Ethics and legal</h2>
+<p>Both datasets are public and aggregate, with no personal data, so GDPR does not apply; we credit the World Bank (CC BY 4.0) and follow the IMF's terms of use. The real risks are bias and false certainty. Data gaps fall hardest on low-income economies, where forecasts may matter most, so every forecast we report carries its error band and assumptions.</p>
+
+<h2><span class="no">9</span>Conclusion</h2>
+<p>Ten public indicators beat simple benchmarks by about 10% in ordinary years, but they cannot see turning points; in 2021 a plain average did better. The value is a transparent, checkable baseline with explicit assumptions. Next: real-time data vintages, leading indicators such as commodity prices, and quantile prediction intervals.</p>
+
+<section class="refs">
+  <p>Code and data: <a href="https://github.com/farhana273/ml_assignment">github.com/farhana273/ml_assignment</a> (notebook <code>models/GDP_Models_Sami.ipynb</code>)</p>
+  <h2>References</h2>
+  <ol>
+    <li>Chu, B. and Qureshi, S. (2023) Comparing out-of-sample performance of machine learning methods to forecast US GDP growth. <i>Computational Economics</i>, 62(4), 1567-1609.</li>
+    <li>Oo, Z.M., Lin, C.Y. and Kakinaka, M. (2025) Deciphering long-term economic growth: an exploration with leading machine learning techniques. <i>Journal of Forecasting</i>, 44(4), 1531-1562.</li>
+    <li>International Monetary Fund (2026) World Economic Outlook database, October 2026. data.imf.org/Datasets/WEO</li>
+    <li>World Bank (2026) World Development Indicators. CC BY 4.0. datacatalog.worldbank.org/search/dataset/0037712</li>
+    <li>Pedregosa, F. et al. (2011) Scikit-learn: machine learning in Python. <i>Journal of Machine Learning Research</i>, 12, 2825-2830.</li>
+    <li>McKinney, W. (2010) Data structures for statistical computing in Python. <i>Proceedings of the 9th Python in Science Conference</i>, 56-61.</li>
+  </ol>
+</section>
+
+</main>
+</body>
+</html>
