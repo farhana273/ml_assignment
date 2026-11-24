@@ -57,15 +57,13 @@
   .refs ol { margin: 0; padding-left: 5mm; columns: 2; column-gap: 7mm; font-size: 11pt; }
   .refs li { margin-bottom: 1.2mm; break-inside: avoid; }
   a { color: var(--accent); }
+  code { hyphens: none; -webkit-hyphens: none; font-size: 11pt; white-space: nowrap; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Can a Model Beat the IMF? Forecasting Next-Year GDP Growth Across Countries</h1>
-  <p class="subtitle">CSC1181 / CSC1203 Machine Learning Project, Dublin City University, November 2026</p>
-  <p class="byline">Farhana Ahmed, Sami Haroon Khan, Sukesh Babu Ramesh Babu, Parthiban Sathappan Tamilselvi<br>
-  Code: <a href="https://github.com/farhana273/ml_assignment">github.com/farhana273/ml_assignment</a></p>
+  <h1>Can a Model Beat the IMF?</h1>
   <div class="rule"></div>
 </header>
 
@@ -148,11 +146,11 @@
 </figure>
 
 <h2><span class="no">7</span>Looking ahead</h2>
-<p>Our team comes from India, Pakistan and Bangladesh and studies in Ireland, so we ended where the data meets home. From real 2025 data, Gradient Boosting forecasts 2026 growth of 6.5% for India, 3.0% for Pakistan, 3.2% for Bangladesh and 4.4% for Ireland, close to the IMF except for Ireland (IMF: -1.0%; Figure 4). 2027 needs assumed 2026 inputs, so the notebook exposes each assumption; a global slowdown cuts India's 2027 forecast from 6.1% to 4.5%. Past errors put an 80% band of about ±4 points around every number.</p>
+<p>Our team comes from India, Pakistan and Bangladesh and studies in Ireland, so we ended where the data meets home. From real 2025 data, Gradient Boosting forecasts 2026 growth of 6.5% for India, 3.0% for Pakistan, 3.2% for Bangladesh and 4.4% for Ireland, close to the IMF except for Ireland (IMF: -1.0%; Figure 4). Weighted by GDP, our world forecast is 3.3% (IMF: 3.1%). 2027 needs assumed 2026 inputs, so the notebook exposes each assumption; a global slowdown cuts India's 2027 forecast from 6.1% to 4.5%. Past errors put an 80% band of about ±4 points around every number.</p>
 
 <figure>
-  <img class="w80" src="../models/outputs/figures/forecast_2026_2027.png" alt="Dot chart comparing our 2026 and 2027 forecasts with IMF projections for India, Pakistan, Bangladesh and Ireland">
-  <figcaption><b>Figure 4.</b> Our forecasts against the IMF's for the team's home countries and Ireland, with the 80% error band from the backtest.</figcaption>
+  <img src="../models/outputs/figures/regions_2026_2027.png" alt="Eight small charts of GDP growth from 2016 with our 2026-27 forecasts and IMF projections for the World, European Union, United States, China, India, Pakistan, Bangladesh and Ireland">
+  <figcaption><b>Figure 4.</b> Eight economies at a glance. World and EU combine our country forecasts using GDP (PPP) weights, as the IMF does.</figcaption>
 </figure>
 
 <h2><span class="no">8</span>Ethics and legal</h2>
@@ -162,6 +160,7 @@
 <p>Ten public indicators beat simple benchmarks by about 10% in ordinary years, but they cannot see turning points; in 2021 a plain average did better. The value is a transparent, checkable baseline with explicit assumptions. Next: real-time data vintages, leading indicators such as commodity prices, and quantile prediction intervals.</p>
 
 <section class="refs">
+  <p>Code and data: <a href="https://github.com/farhana273/ml_assignment">github.com/farhana273/ml_assignment</a> (notebook <code>models/GDP_Models_Sami.ipynb</code>)</p>
   <h2>References</h2>
   <ol>
     <li>Chu, B. and Qureshi, S. (2023) Comparing out-of-sample performance of machine learning methods to forecast US GDP growth. <i>Computational Economics</i>, 62(4), 1567-1609.</li>

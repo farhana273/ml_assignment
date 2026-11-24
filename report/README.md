@@ -2,7 +2,7 @@
 
 `report.html` is the source and `report.pdf` is the output. The figures come straight from `../models/outputs/figures/`.
 
-Current draft: 878 words (this includes the title and headings; tables, figures, captions and references are excluded). It is 4 pages, A4, two columns, with everything at 11 pt or above.
+Current draft: 855 words (this includes the title and headings; tables, figures, captions and references are excluded). The body fills 4 pages and the references end on page 5. It is A4, two columns, with everything at 11 pt or above.
 
 ## Rebuild after editing
 
@@ -23,5 +23,5 @@ Run this from the `report/` folder:
 4. **Sukesh:** check the EDA numbers in Section 2 against a fresh run of his notebook.
 5. **Everyone:**
    - Rewrite your own section in your own words.
-   - Stay under 1,000 words (about 120 are left).
+   - Stay under 1,000 words (about 140 are left).
    - Remove every yellow box, rebuild, and check the page count is still 5 or fewer.
