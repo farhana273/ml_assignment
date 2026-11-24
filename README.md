@@ -64,9 +64,11 @@ Both are public, aggregate data with no personal information.
 
 ## Team
 
-| Member | Work |
-|---|---|
-| Farhana Ahmed | Data integration, target and splits, IMF benchmark |
-| Sami Haroon Khan | Preprocessing, models, validation, robustness checks, forecasts |
-| Sukesh Babu Ramesh Babu | Exploratory data analysis and statistics |
-| Parthiban Sathappan Tamilselvi | Literature review, error analysis, discussion |
+| Member | Work | Presents |
+|---|---|---|
+| Farhana Ahmed | Data integration, target and splits, IMF benchmark | Question, data, IMF comparison |
+| Sami Haroon Khan | Preprocessing, models, validation, robustness checks, forecasts | Models, validation, forecasts |
+| Sukesh Babu Ramesh Babu | Exploratory data analysis and statistics | EDA findings |
+| Parthiban Sathappan Tamilselvi | Literature review, error analysis, discussion | Related work, error analysis, limitations |
+
+All four members wrote, edited and reviewed the report together.
