@@ -1,0 +1,10 @@
+period,comparison,diff,ci_low,ci_high,verdict
+2008-19 normal years,GB minus Naive,-0.48,-0.66,-0.32,GB better
+2008-19 normal years,GB minus Global mean,-0.49,-0.61,-0.37,GB better
+2008-19 normal years,GB minus Country mean,-0.31,-0.48,-0.17,GB better
+2021-24 test,GB minus Naive,-2.34,-2.85,-1.92,GB better
+2021-24 test,GB minus Global mean,0.13,-0.03,0.27,no clear difference
+2021-24 test,GB minus Country mean,0.04,-0.13,0.19,no clear difference
+2022-24 test without 2021,GB minus Naive,-1.02,-1.49,-0.66,GB better
+2022-24 test without 2021,GB minus Global mean,-0.36,-0.51,-0.22,GB better
+2022-24 test without 2021,GB minus Country mean,-0.34,-0.5,-0.19,GB better
