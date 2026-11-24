@@ -1,4 +1,4 @@
-,Ridge,Lasso,RandomForest,GradientBoosting
+,Ridge,Lasso,Random Forest,Gradient Boosting
 gdp_growth,0.649,0.639,0.634,0.515
 inflation,0.0,0.0,0.009,-0.005
 unemployment,-0.001,0.0,-0.002,0.019

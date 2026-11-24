@@ -1,4 +1,4 @@
-target_year,Naive,Global mean,Country mean,Ridge,RandomForest,GradientBoosting
+target_year,Naive,Global mean,Country mean,Ridge,Random Forest,Gradient Boosting
 2008,3.59,3.41,3.13,3.2,3.27,3.24
 2009,5.38,6.09,5.88,5.87,5.75,5.76
 2010,5.11,3.31,3.05,3.2,2.99,3.1

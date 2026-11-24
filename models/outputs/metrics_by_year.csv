@@ -1,4 +1,4 @@
-target_year,Country mean,Global mean,GradientBoosting,Lasso,Naive,RandomForest,Ridge
+target_year,Country mean,Global mean,Gradient Boosting,Lasso,Naive,Random Forest,Ridge
 2018,2.13,2.32,1.69,1.67,2.33,1.64,1.68
 2019,2.64,2.69,2.12,2.13,1.99,2.06,2.13
 2020,9.6,9.61,9.16,9.09,8.65,8.97,9.08
