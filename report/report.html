@@ -77,16 +77,16 @@
 </table>
 
 <div class="abstract w">
-  <b>Abstract.</b> Each autumn the IMF forecasts next year's growth for almost every economy. Can a compact model fed ten public indicators do as well? Using World Bank and IMF data for 217 economies (2000-2024), we compared four machine learning models with three simple benchmarks under year-based validation. In ordinary years the models cut error by about 10%. At turning points such as 2009 and 2021, every method failed.
+  <b>Abstract.</b> Each autumn the IMF forecasts next year's growth for almost every economy. Can a compact model fed ten public indicators do as well? Using World Bank and IMF data for 217 economies (2000-2024), we compared four machine learning models with three simple benchmarks under year-based validation. In ordinary years the models cut error by about 10%. At turning points such as 2009 and 2021, every method failed. The IMF stayed ahead: over 2021-2024 its error was 2.76 points against 3.41 for our best model.
 </div>
 
 <main class="w">
 
 <h2><span class="no">1</span>The question</h2>
-<p>A growth forecast quietly shapes big decisions: budgets, interest rates, where a family's savings go. The IMF's World Economic Outlook is the reference forecast, built with expert judgement. We ask something narrower and testable: from this year's published indicators alone, can a model predict next year's real GDP growth better than simple benchmarks and the IMF? We score forecasts by mean absolute error (MAE) in percentage points, with RMSE as a second view.</p>
+<p>Growth forecasts shape budgets and interest rates. The IMF's World Economic Outlook is the reference forecast, built with expert judgement. We ask: from this year's published indicators alone, can a model predict next year's real GDP growth better than simple benchmarks and the IMF? We score forecasts by mean absolute error (MAE) in percentage points, with RMSE as a second view.</p>
 
 <h2><span class="no">2</span>Data</h2>
-<p>We merged the World Bank World Development Indicators with the IMF World Economic Outlook (October 2026) into one panel: 217 economies, input years 2000-2023, next year's growth as the target, and eight indicators (Table 1). The data are uneven: investment is missing for 21% of rows and trade for 18%, mostly in small economies. Tails are heavy, with inflation up to 514%. This year's growth is the strongest single correlate of next year's (r = 0.21).</p>
+<p>We merged the World Bank World Development Indicators with the IMF World Economic Outlook (October 2026) into one panel: 217 economies, input years 2000-2023, next year's growth as the target, and eight indicators (Table 1). The data are uneven: investment is missing for 21% of rows and trade for 18%, mostly in small economies. Tails are heavy, with inflation up to 557%. This year's growth is the strongest single correlate of next year's (r = 0.21).</p>
 
 <div class="tbl">
   <p class="cap"><b>Table 1.</b> The ten model features.</p>
@@ -99,12 +99,12 @@
 </div>
 
 <h2><span class="no">3</span>What others found</h2>
-<p>Chu and Qureshi (2023) ran a horse race of machine and deep learning methods for US GDP growth, with recursive out-of-sample evaluation over several sub-periods; we borrow that design for our backtest. Oo, Lin and Kakinaka (2025) apply machine learning to longer growth projections, which motivates our 2027 scenarios. Most such work studies one country; we pool 217 economies.</p>
-<p class="todo">Parthiban: add two or three papers (crisis-period forecasting, cross-country panels), one sentence each on method and finding.</p>
+<p>Chu and Qureshi (2023) compared machine and deep learning methods for US GDP growth with recursive out-of-sample tests, the design our backtest borrows. Oo, Lin and Kakinaka (2025) apply machine learning to longer growth projections, which motivates our 2027 scenarios. Most such work studies one country; we pool 217 economies.</p>
+<p>Jung, Patnam and Ter-Martirosyan (2018) found machine learning beat IMF forecasts for seven economies, but far less at the annual horizon. Bolhuis and Rayner (2020) cut Turkish forecast errors by 30% or more with combined tree models. Celasun et al. (2021) found IMF one-year forecasts nearly unbiased: a hard benchmark.</p>
 
 <h2><span class="no">4</span>How we built it</h2>
 <p><span class="lead">Leakage first.</span> Splits follow the target year: training 2001-2017, validation 2018-2019, test 2021-2024, and 2020 alone as a COVID stress test.</p>
-<p><span class="lead">Features.</span> Eight indicators plus last year's growth and a three-year average give ten features. Gaps take the country's last earlier value, then the training median; features are clipped at training percentiles 1 and 99. A scikit-learn pipeline fits imputer and scaler on training rows only.</p>
+<p><span class="lead">Features.</span> Gaps take the country's last earlier value, then the training median; features are clipped at training percentiles 1 and 99. A scikit-learn pipeline fits imputer and scaler on training rows only.</p>
 <p><span class="lead">Models.</span> Three benchmarks set the bar: naive persistence (next year equals this year), the global mean and each country's own mean. We fit Ridge for correlated indicators, Lasso for feature selection, Random Forest for non-linear effects, and Gradient Boosting with Huber loss to resist outliers, tuned on 2018-2019 and refit on 2001-2019.</p>
 <p><span class="lead">Robustness.</span> An expanding-window backtest re-forecasts every year from 2008 to 2024 from earlier data only, and a bootstrap over whole countries tests whether gaps are real.</p>
 
@@ -114,9 +114,9 @@
 </figure>
 
 <h2><span class="no">5</span>What happened</h2>
-<p>On validation every model beats every benchmark; Random Forest is best (MAE 1.85 against 2.16 for naive). The test years are humbler: the plain global mean (3.35) edges past Gradient Boosting (3.47).</p>
+<p>On validation every model beats every benchmark (Random Forest 1.85, naive 2.16); on the test years the global mean (3.35) edges past Gradient Boosting (3.47).</p>
 <p>The backtest explains why (Figure 2). Across 2008-2019 a model is the most accurate method in nine of twelve years, with MAE 2.80 against 3.11 for the best benchmark; the bootstrap interval excludes zero (-0.31 points, 95% CI -0.48 to -0.17). The test-period tie comes from one year, 2021. Random Forest and Gradient Boosting cannot be separated: the random seed alone moves Random Forest between 3.47 and 3.52. This year's growth carries most of the signal, and Lasso drops four indicators (Figure 3).</p>
-<p class="todo">Farhana: add the IMF historical forecast comparison here (same rows, MAE) once the benchmark file is in the repo.</p>
+<p><span class="lead">Against the IMF.</span> On the 752 country-years with an October IMF forecast for 2021-2024, the IMF's error was 2.76 points against 3.41 for Gradient Boosting and 3.30 for the global mean (gap 95% CI 0.40 to 0.94). Without 2021 the gap narrows to 0.26; in 2024 the models matched the IMF (1.83 against 1.85). The IMF won despite forecasting before the year's data were complete.</p>
 
 <div class="tbl t2">
   <p class="cap"><b>Table 2.</b> MAE (percentage points); best in bold.</p>
@@ -138,7 +138,7 @@
 
 <h2><span class="no">6</span>Where it breaks</h2>
 <p>Errors cluster at turning points. In 2021 the models trusted the 2020 collapse: for India they predicted about 1% growth when the economy grew 9.7%, while India's own average said 6.6%. Ireland fails differently: multinational accounting swung measured growth from 7.5% to -2.5% in 2023. Annual indicators capture momentum, not shocks.</p>
-<p class="todo">Parthiban: add error by income group and region (models/outputs/predictions_all_models.csv).</p>
+<p>The models help most in poorer economies: for low-income countries Ridge's error is 2.40 against 2.97 for the global mean, and Gradient Boosting leads in Sub-Saharan Africa. In high-income economies the global mean wins (3.81 against 4.09).</p>
 <p>Limitations: we use today's revised data, not what forecasters knew then; income groups are current; and annual data gives only about 3,500 training rows.</p>
 
 <figure class="narrow">
@@ -147,7 +147,7 @@
 </figure>
 
 <h2><span class="no">7</span>Looking ahead</h2>
-<p>Our team comes from India, Pakistan and Bangladesh and studies in Ireland, so we ended where the data meets home. From real 2025 data, Gradient Boosting forecasts 2026 growth of 6.5% for India, 3.0% for Pakistan, 3.2% for Bangladesh and 4.4% for Ireland, close to the IMF except for Ireland (IMF: -1.0%; Figure 4). Weighted by GDP, our world forecast is 3.3% (IMF: 3.1%). 2027 needs assumed 2026 inputs, so the notebook exposes each assumption; a global slowdown cuts India's 2027 forecast from 6.1% to 4.5%. Past errors put an 80% band of about ±4 points around every number.</p>
+<p>Our team comes from India, Pakistan and Bangladesh and studies in Ireland, so we end there. From real 2025 data, Gradient Boosting forecasts 2026 growth of 6.5% for India, 3.0% for Pakistan, 3.2% for Bangladesh and 4.4% for Ireland, close to the IMF except for Ireland (IMF: -1.0%; Figure 4). Weighted by GDP, our world forecast is 3.3% (IMF: 3.1%). 2027 needs assumed 2026 inputs, so the notebook exposes each assumption; a global slowdown cuts India's 2027 forecast from 6.1% to 4.5%. Past errors put an 80% band of about ±4 points around every number.</p>
 
 <figure>
   <img src="../models/outputs/figures/regions_2026_2027.png" alt="Eight small charts of GDP growth from 2016 with our 2026-27 forecasts and IMF projections for the World, European Union, United States, China, India, Pakistan, Bangladesh and Ireland">
@@ -155,18 +155,22 @@
 </figure>
 
 <h2><span class="no">8</span>Ethics and legal</h2>
-<p>Both datasets are public and aggregate, with no personal data, so GDPR does not apply; we credit the World Bank (CC BY 4.0) and follow the IMF's terms of use. The real risks are bias and false certainty. Data gaps fall hardest on low-income economies, where forecasts may matter most, so every forecast we report carries its error band and assumptions.</p>
+<p>Both datasets are public and aggregate, with no personal data, so GDPR does not apply; we credit the World Bank (CC BY 4.0) and follow the IMF's terms of use. The real risks are bias and false certainty: data gaps fall hardest on low-income economies, so every forecast we report carries its error band and assumptions.</p>
 
 <h2><span class="no">9</span>Conclusion</h2>
-<p>Ten public indicators beat simple benchmarks by about 10% in ordinary years, but they cannot see turning points; in 2021 a plain average did better. The value is a transparent, checkable baseline with explicit assumptions. Next: real-time data vintages, leading indicators such as commodity prices, and quantile prediction intervals.</p>
+<p>Ten public indicators beat simple benchmarks by about 10% in ordinary years, but they cannot see turning points, and they do not beat the IMF, whose judgement is worth about 0.65 points of error. What remains is a transparent baseline with explicit assumptions. Next: real-time data vintages, leading indicators and quantile prediction intervals.</p>
 
 <section class="refs">
   <p>Code and data: <a href="https://github.com/farhana273/ml_assignment">github.com/farhana273/ml_assignment</a> (notebook <code>models/GDP_Models_Sami.ipynb</code>)</p>
   <h2>References</h2>
   <ol>
+    <li>Bolhuis, M.A. and Rayner, B. (2020) Deus ex machina? A framework for macro forecasting with machine learning. IMF Working Paper WP/20/45.</li>
+    <li>Celasun, O., Lee, J., Mrkaic, M. and Timmermann, A. (2021) An evaluation of World Economic Outlook growth forecasts, 2004-17. IMF Working Paper WP/21/216.</li>
     <li>Chu, B. and Qureshi, S. (2023) Comparing out-of-sample performance of machine learning methods to forecast US GDP growth. <i>Computational Economics</i>, 62(4), 1567-1609.</li>
+    <li>Jung, J.-K., Patnam, M. and Ter-Martirosyan, A. (2018) An algorithmic crystal ball: forecasts based on machine learning. IMF Working Paper WP/18/230.</li>
     <li>Oo, Z.M., Lin, C.Y. and Kakinaka, M. (2025) Deciphering long-term economic growth: an exploration with leading machine learning techniques. <i>Journal of Forecasting</i>, 44(4), 1531-1562.</li>
     <li>International Monetary Fund (2026) World Economic Outlook database, October 2026. data.imf.org/Datasets/WEO</li>
+    <li>International Monetary Fund (2025) Historical WEO forecasts database (WEOhistorical.xlsx). imf.org</li>
     <li>World Bank (2026) World Development Indicators. CC BY 4.0. datacatalog.worldbank.org/search/dataset/0037712</li>
     <li>Pedregosa, F. et al. (2011) Scikit-learn: machine learning in Python. <i>Journal of Machine Learning Research</i>, 12, 2825-2830.</li>
     <li>McKinney, W. (2010) Data structures for statistical computing in Python. <i>Proceedings of the 9th Python in Science Conference</i>, 56-61.</li>
