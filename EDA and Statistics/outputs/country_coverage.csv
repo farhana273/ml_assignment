@@ -1,0 +1,218 @@
+Country Code,Country Name,Observations
+ABW,Aruba,24
+AFG,Afghanistan,24
+AGO,Angola,24
+ALB,Albania,24
+AND,Andorra,24
+ARE,United Arab Emirates,24
+ARG,Argentina,24
+ARM,Armenia,24
+ASM,American Samoa,24
+ATG,Antigua and Barbuda,24
+AUS,Australia,24
+AUT,Austria,24
+AZE,Azerbaijan,24
+BDI,Burundi,24
+BEL,Belgium,24
+BEN,Benin,24
+BFA,Burkina Faso,24
+BGD,Bangladesh,24
+BGR,Bulgaria,24
+BHR,Bahrain,24
+BHS,"Bahamas, The",24
+BIH,Bosnia and Herzegovina,24
+BLR,Belarus,24
+BLZ,Belize,24
+BMU,Bermuda,24
+BOL,Bolivia,24
+BRA,Brazil,24
+BRB,Barbados,24
+BRN,Brunei Darussalam,24
+BTN,Bhutan,24
+BWA,Botswana,24
+CAF,Central African Republic,24
+CAN,Canada,24
+CHE,Switzerland,24
+CHI,Channel Islands,24
+CHL,Chile,24
+CHN,China,24
+CIV,Cote d'Ivoire,24
+CMR,Cameroon,24
+COD,"Congo, Dem. Rep.",24
+COG,"Congo, Rep.",24
+COL,Colombia,24
+COM,Comoros,24
+CPV,Cabo Verde,24
+CRI,Costa Rica,24
+CUB,Cuba,24
+CUW,Curacao,24
+CYM,Cayman Islands,24
+CYP,Cyprus,24
+CZE,Czechia,24
+DEU,Germany,24
+DJI,Djibouti,24
+DMA,Dominica,24
+DNK,Denmark,24
+DOM,Dominican Republic,24
+DZA,Algeria,24
+ECU,Ecuador,24
+EGY,"Egypt, Arab Rep.",24
+ERI,Eritrea,24
+ESP,Spain,24
+EST,Estonia,24
+ETH,Ethiopia,24
+FIN,Finland,24
+FJI,Fiji,24
+FRA,France,24
+FRO,Faroe Islands,24
+FSM,"Micronesia, Fed. Sts.",24
+GAB,Gabon,24
+GBR,United Kingdom,24
+GEO,Georgia,24
+GHA,Ghana,24
+GIB,Gibraltar,24
+GIN,Guinea,24
+GMB,"Gambia, The",24
+GNB,Guinea-Bissau,24
+GNQ,Equatorial Guinea,24
+GRC,Greece,24
+GRD,Grenada,24
+GRL,Greenland,24
+GTM,Guatemala,24
+GUM,Guam,24
+GUY,Guyana,24
+HKG,"Hong Kong SAR, China",24
+HND,Honduras,24
+HRV,Croatia,24
+HTI,Haiti,24
+HUN,Hungary,24
+IDN,Indonesia,24
+IMN,Isle of Man,24
+IND,India,24
+IRL,Ireland,24
+IRN,"Iran, Islamic Rep.",24
+IRQ,Iraq,24
+ISL,Iceland,24
+ISR,Israel,24
+ITA,Italy,24
+JAM,Jamaica,24
+JOR,Jordan,24
+JPN,Japan,24
+KAZ,Kazakhstan,24
+KEN,Kenya,24
+KGZ,Kyrgyz Republic,24
+KHM,Cambodia,24
+KIR,Kiribati,24
+KNA,St. Kitts and Nevis,24
+KOR,"Korea, Rep.",24
+KWT,Kuwait,24
+LAO,Lao PDR,24
+LBN,Lebanon,24
+LBR,Liberia,24
+LBY,Libya,24
+LCA,St. Lucia,24
+LIE,Liechtenstein,24
+LKA,Sri Lanka,24
+LSO,Lesotho,24
+LTU,Lithuania,24
+LUX,Luxembourg,24
+LVA,Latvia,24
+MAC,"Macao SAR, China",24
+MAF,St. Martin (French part),24
+MAR,Morocco,24
+MCO,Monaco,24
+MDA,Moldova,24
+MDG,Madagascar,24
+MDV,Maldives,24
+MEX,Mexico,24
+MHL,Marshall Islands,24
+MKD,North Macedonia,24
+MLI,Mali,24
+MLT,Malta,24
+MMR,Myanmar,24
+MNE,Montenegro,24
+MNG,Mongolia,24
+MNP,Northern Mariana Islands,24
+MOZ,Mozambique,24
+MRT,Mauritania,24
+MUS,Mauritius,24
+MWI,Malawi,24
+MYS,Malaysia,24
+NAM,Namibia,24
+NCL,New Caledonia,24
+NER,Niger,24
+NGA,Nigeria,24
+NIC,Nicaragua,24
+NLD,Netherlands,24
+NOR,Norway,24
+NPL,Nepal,24
+NRU,Naoero,24
+NZL,New Zealand,24
+OMN,Oman,24
+PAK,Pakistan,24
+PAN,Panama,24
+PER,Peru,24
+PHL,Philippines,24
+PLW,Palau,24
+PNG,Papua New Guinea,24
+POL,Poland,24
+PRI,Puerto Rico (US),24
+PRK,"Korea, Dem. People's Rep.",24
+PRT,Portugal,24
+PRY,Paraguay,24
+PSE,West Bank and Gaza,24
+PYF,French Polynesia,24
+QAT,Qatar,24
+ROU,Romania,24
+RUS,Russian Federation,24
+RWA,Rwanda,24
+SAU,Saudi Arabia,24
+SDN,Sudan,24
+SEN,Senegal,24
+SGP,Singapore,24
+SLB,Solomon Islands,24
+SLE,Sierra Leone,24
+SLV,El Salvador,24
+SMR,San Marino,24
+SOM,"Somalia, Fed. Rep.",24
+SRB,Serbia,24
+SSD,South Sudan,24
+STP,Sao Tome and Principe,24
+SUR,Suriname,24
+SVK,Slovak Republic,24
+SVN,Slovenia,24
+SWE,Sweden,24
+SWZ,Eswatini,24
+SXM,Sint Maarten (Dutch part),24
+SYC,Seychelles,24
+SYR,Syrian Arab Republic,24
+TCA,Turks and Caicos Islands,24
+TCD,Chad,24
+TGO,Togo,24
+THA,Thailand,24
+TJK,Tajikistan,24
+TKM,Turkmenistan,24
+TLS,Timor-Leste,24
+TON,Tonga,24
+TTO,Trinidad and Tobago,24
+TUN,Tunisia,24
+TUR,Turkiye,24
+TUV,Tuvalu,24
+TZA,Tanzania,24
+UGA,Uganda,24
+UKR,Ukraine,24
+URY,Uruguay,24
+USA,United States,24
+UZB,Uzbekistan,24
+VCT,St. Vincent and the Grenadines,24
+VEN,"Venezuela, RB",24
+VGB,British Virgin Islands,24
+VIR,Virgin Islands (U.S.),24
+VNM,Viet Nam,24
+VUT,Vanuatu,24
+WSM,Samoa,24
+XKX,Kosovo,24
+YEM,"Yemen, Rep.",24
+ZAF,South Africa,24
+ZMB,Zambia,24
+ZWE,Zimbabwe,24

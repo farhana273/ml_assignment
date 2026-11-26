@@ -1,0 +1,77 @@
+EDA AND STATISTICAL ANALYSIS – RESULTS SUMMARY
+Generated: 2026-11-26 04:13
+
+Total observations: 5208
+Total variables: 14
+Unique countries: 217
+Input-year range: 2000 to 2023
+Target-year range: 2001 to 2024
+Non-missing next-year GDP targets: 4969
+Missing next-year GDP targets: 239
+Target coverage: 95.41%
+Duplicate country-year keys: 0
+Correct target-year alignments: 5208
+Incorrect target-year alignments: 0
+
+Missing values by variable:
+                      Missing Values  Missing Percentage
+investment                      1104               21.20
+trade                            930               17.86
+inflation                        856               16.44
+government_debt                  755               14.50
+unemployment                     724               13.90
+current_account                  723               13.88
+gdp_growth                       240                4.61
+next_year_gdp_growth             239                4.59
+population_growth                  1                0.02
+Country Code                       0                0.00
+Year                               0                0.00
+target_year                        0                0.00
+Country Name                       0                0.00
+dataset_split                      0                0.00
+
+Pearson correlation with next-year GDP growth:
+gdp_growth           0.2138
+population_growth    0.1332
+investment           0.1171
+government_debt     -0.0534
+unemployment        -0.0475
+inflation           -0.0334
+trade               -0.0173
+current_account      0.0061
+
+Pearson tests after FDR correction:
+        Indicator  Correlation  P-Value  Sample Size  Adjusted P-Value  Significant at 5%
+       gdp_growth     0.213828 0.000000         4953          0.000000               True
+        inflation    -0.033352 0.028448         4316          0.037930               True
+     unemployment    -0.047499 0.001677         4374          0.002682               True
+            trade    -0.017334 0.258949         4243          0.295942              False
+       investment     0.117078 0.000000         4074          0.000000               True
+population_growth     0.133249 0.000000         4968          0.000000               True
+  government_debt    -0.053355 0.000390         4415          0.000780               True
+  current_account     0.006107 0.684511         4429          0.684511              False
+
+Spearman tests after FDR correction:
+        Indicator  Correlation  P-Value  Sample Size  Adjusted P-Value  Significant at 5%
+       gdp_growth     0.428162 0.000000         4953          0.000000               True
+        inflation     0.090201 0.000000         4316          0.000000               True
+     unemployment    -0.097499 0.000000         4374          0.000000               True
+            trade    -0.046980 0.002206         4243          0.002521               True
+       investment     0.121912 0.000000         4074          0.000000               True
+population_growth     0.192805 0.000000         4968          0.000000               True
+  government_debt    -0.081539 0.000000         4415          0.000000               True
+  current_account    -0.022407 0.135964         4429          0.135964              False
+
+Outlier summary:
+           Indicator  Valid Observations  Lower Bound  Upper Bound  Outlier Count  Outlier Percentage
+          gdp_growth                4968       -5.802       12.849            347               6.985
+           inflation                4352       -6.619       15.356            293               6.733
+        unemployment                4484       -6.882       21.476            165               3.680
+               trade                4278      -25.925      189.789            163               3.810
+          investment                4104        5.679       41.316            206               5.019
+   population_growth                5207       -2.542        5.073            126               2.420
+     government_debt                4453      -31.879      128.785            214               4.806
+     current_account                4485      -21.074       16.289            380               8.473
+next_year_gdp_growth                4969       -5.722       12.708            348               7.003
+
+Note: These are exploratory statistical results. Correlation does not establish causation.
