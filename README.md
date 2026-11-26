@@ -12,7 +12,12 @@ merged_data/
   original_data/                    IMF WEO download (October 2026) and a link to the WDI Excel file
   merged_data/                      the four split CSVs that every other notebook reads
 EDA and Statistics/
-  EDA_Statistics.ipynb              missing values, distributions, outliers, correlations, hypothesis tests
+  Sukesh_GDP_EDA_Statistics.ipynb   missing values, distributions, outliers, correlations, hypothesis tests
+  outputs/                          EDA tables, figures and findings summary
+imf_forecast/
+  imf_forecast_data.ipynb           IMF October forecasts for 2021-24, matched to actual growth
+Literature/
+  Parthiban.ipynb                   error by region and income group, with bootstrap intervals
 models/
   GDP_Models_Sami.ipynb             baselines, 4 models, validation, robustness checks, 2026-27 forecasts
   outputs/                          predictions, metrics, forecasts and figures written by the notebook
@@ -53,6 +58,7 @@ It was tested with Python 3.14, pandas 3.0, scikit-learn 1.9 and matplotlib 3.11
 
 - **Normal years (2008-2019):** the models are about 10% more accurate than the best simple baseline (MAE 2.80 vs 3.11 percentage points).
 - **Turning points (2009, 2020, 2021):** no method predicts them. On 2021-2024 the models tie with a plain average.
+- **Against the IMF (2021-2024, 752 matched country-years):** the IMF wins, MAE 2.76 vs 3.41 for Gradient Boosting. By 2024 the gap had closed (1.85 vs 1.83).
 - **Forecasts:** for 2026, our median country forecast is 3.2% and the IMF's is 3.0%.
 
 ## Data
