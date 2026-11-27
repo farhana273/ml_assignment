@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Predicting GDP growth across countries</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 16mm 15mm; }
+  :root { --ink: #0b0b0b; --ink2: #3d3c39; --rule: #d9d8d2; --accent: #2a78d6; --tint: #eef4fc; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); background: #fff; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+         font-size: 11pt; line-height: 1.3; hyphens: auto; -webkit-hyphens: auto; }
+  header { margin-bottom: 3mm; }
+  h1 { font-size: 19pt; line-height: 1.12; margin: 0; letter-spacing: -0.2pt; }
+  .rule { height: 2px; background: var(--accent); width: 18mm; margin: 3mm 0 3.5mm; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 11pt; font-variant-numeric: tabular-nums; }
+  th { text-align: left; font-weight: 700; padding: 1.1mm 2mm 1.1mm 0; border-bottom: 1px solid var(--ink); }
+  td { padding: 0.9mm 2mm 0.9mm 0; vertical-align: top; border-bottom: 1px solid var(--rule); }
+  tr:last-child td { border-bottom: none; }
+  td.n, th.n { text-align: right; padding-right: 0; padding-left: 2mm; }
+  .roles { margin-bottom: 4mm; }
+  .roles td:first-child { white-space: nowrap; font-weight: 700; padding-right: 4mm; width: 30%; }
+
+  .abstract { background: var(--tint); padding: 3mm 4mm; margin: 0 0 4mm; }
+  .abstract b { color: var(--accent); }
+
+  main { column-count: 2; column-gap: 7mm; column-fill: balance; }
+  h2 { font-size: 12pt; margin: 3.2mm 0 1.2mm; break-after: avoid; }
+  h2 .no { color: var(--accent); margin-right: 1.5mm; }
+  p { margin: 0 0 2mm; orphans: 3; widows: 3; }
+
+  .tbl { break-inside: avoid; margin: 1mm 0 3mm; }
+  .cap { font-size: 11pt; color: var(--ink2); margin: 0 0 1mm; }
+  .cap b { color: var(--ink); }
+  figure { margin: 1mm 0 3mm; break-inside: avoid; }
+  figure.wide { column-span: all; }
+  figure img { display: block; width: 100%; }
+  figure.wide img { width: 100%; }
+  figcaption { font-size: 11pt; color: var(--ink2); margin-top: 1.5mm; }
+  figcaption b { color: var(--ink); }
+
+  .refs { column-span: all; margin-top: 3mm; border-top: 1px solid var(--rule); padding-top: 2mm; }
+  .refs h2 { margin-top: 0; }
+  .refs ol { margin: 0; padding-left: 6mm; columns: 2; column-gap: 7mm; font-size: 11pt; }
+  .refs li { margin-bottom: 1.2mm; break-inside: avoid; overflow-wrap: anywhere; hyphens: none; -webkit-hyphens: none; }
+  a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Predicting GDP growth across countries: can machine learning beat the IMF’s own forecasts?</h1>
+  <div class="rule"></div>
+</header>
+
+<p class="cap"><b>Contribution and roles</b></p>
+<table class="roles">
+  <tr><th>Member</th><th>Contribution</th></tr>
+  <tr><td>Farhana Ahmed</td><td>IMF and WDI data extraction and integration; country-code harmonization; missingness assessment; target creation and temporal splits; historical IMF forecast benchmark construction.</td></tr>
+  <tr><td>Sami Haroon Khan</td><td>Lag-feature engineering; leakage-safe preprocessing; baseline and ML model training; hyperparameter tuning, validation and robustness checks; scoring the models against the IMF benchmark; 2026–27 forecasts and scenarios; figures and final report assembly.</td></tr>
+  <tr><td>Sukesh Babu Ramesh Babu</td><td>Exploratory data analysis; data validation; descriptive statistics, outlier and correlation analysis, FDR-adjusted tests, visualizations and literature review.</td></tr>
+  <tr><td>Parthiban Sathappan Tamilselvi</td><td>Regional and income-group error analysis; country-cluster bootstrap confidence intervals; interpretation, limitations and ethical considerations.</td></tr>
+</table>
+
+<div class="abstract"><b>Abstract.</b> This study tests four machine learning models for one-year-ahead real GDP growth forecasting across 217 economies using IMF and World Bank indicators. Using temporal validation, backtesting, and comparison with historical IMF forecasts, we ask whether machine learning can beat the IMF’s own forecasts. We find that machine learning improved on simple benchmarks in stable periods, but it did not outperform the IMF overall and struggled in periods of economic disturbance.</div>
+
+<main>
+
+<h2><span class="no">1</span>Problem and data</h2>
+<p>The aim is to establish whether machine learning can outperform the IMF’s historical forecasts of next-year real GDP growth. To set up this comparison, we obtained annual macroeconomic data from the World Development Indicators (WDI) and World Economic Outlook (WEO) [1], [2]. The integrated panel contains 5,425 observations for 217 economies (2000–2024), including 3,631 complete rows (66.93%). The supervised forecasting panel covers target years 2001–2024 and includes 5,208 observations. Eight predictors were used: real GDP growth, inflation, unemployment, trade, investment, population growth, government debt and current account balance. The target is next year's real GDP growth (%). Performance was quantified using mean absolute error (MAE) and root mean squared error (RMSE), expressed in percentage points.</p>
+
+<h2><span class="no">2</span>Literature review</h2>
+<p>Jung et al. [3] illustrated the potential of Elastic Net, SuperLearner and recurrent neural networks for macroeconomic forecasting. Bolhuis and Rayner [4] addressed collinearity and nonlinear relationships through machine learning. Chu and Qureshi [5] emphasised the importance of predictor quality and recursive out-of-sample evaluation when comparing regularised regression and tree-based methods. Kant et al. [6] reported strong Random Forest performance in Dutch GDP nowcasting, although their forecasting setting differs from this annual cross-country study. Celasun et al. [7] evaluated WEO forecasts and identified limitations of some medium-term projections relative to simple benchmarks. Together, these studies motivate comparing regularised and nonlinear models relative to both statistical baselines and IMF forecasts.</p>
+
+<h2><span class="no">3</span>Methods</h2>
+<p>We merged data by country code and year after removing regional aggregates and harmonising IMF KOS/WBG with WDI XKX/PSE. We selected the 2000–2024 period because earlier observations had greater missingness. Next, we aligned targets within countries by shifting GDP growth forward by one year. Exploratory analysis covered distributions, missingness, IQR-based outliers, Pearson and Spearman correlations, and Benjamini–Hochberg FDR-adjusted tests. Six of eight Pearson tests and seven of eight Spearman tests were statistically significant at the 5% level. Current-year GDP growth showed the strongest Pearson (r = 0.214) and Spearman (ρ = 0.428) correlations with next-year GDP growth.</p>
+<p>We filled missing predictors using earlier country-specific observations, followed by training medians. We clipped features at the training-set 1st and 99th percentiles; the target remained unchanged. We used a scikit-learn pipeline for missing-value imputation and scaling [8]. Two historical growth features (previous-year growth and a three-year average) increased the feature count to ten. The target, a growth rate, is already differenced, so no stationarity conversion was needed. We implemented three baselines: naive persistence, global training mean, and country training mean.</p>
+<p>Ridge and Lasso regression [9], [10] addressed correlated predictors and feature selection, while Random Forest models and Gradient Boosting [11], [12] captured nonlinear relationships. Gradient Boosting used Huber loss [13] to reduce sensitivity to extreme errors. Given the sample size and the limited validation gains from more complex models, we did not select neural networks.</p>
+<p>Temporal splits (Table 1) prevented training on future observations. Selected hyperparameters were Ridge α = 0.1, Lasso α = 0.05, Random Forest depth = 4 and Gradient Boosting with 100 trees. We tuned models on 2018–2019 and refit them on 2001–2019 before final testing. To assess robustness, we used an expanding-window backtest (2008–2024), a COVID-19 stress test, Random Forest seed checks, and country-cluster bootstrapping [14]. The historical IMF benchmark matched Fall WEO forecasts from 2020–2023 to actual growth in 2021–2024 [15], yielding 752 matched observations representing 190 economies.</p>
+
+<div class="tbl">
+  <p class="cap"><b>Table 1.</b> Temporal dataset splits.</p>
+  <table>
+    <tr><th>Split (target years)</th><th>Purpose</th></tr>
+    <tr><td>2001–2017</td><td>Training</td></tr>
+    <tr><td>2018–2019</td><td>Validation</td></tr>
+    <tr><td>2020</td><td>COVID-19 stress test</td></tr>
+    <tr><td>2021–2024</td><td>Final test</td></tr>
+  </table>
+</div>
+
+<h2><span class="no">4</span>Results</h2>
+<p>Table 2 and Fig. 1 summarise the forecasting results. In this section, we compare model performance across validation, test, and backtest settings. All four models outperformed the baselines during validation, and during 2008–2019 machine learning reduced MAE by approximately 10% relative to the country mean. However, the global mean achieved lower test MAE than Gradient Boosting, and the IMF remained more accurate on the matched sample. Current GDP growth was the dominant predictor, while Lasso excluded unemployment, inflation, government debt and current account balance.</p>
+
+<div class="tbl">
+  <p class="cap"><b>Table 2.</b> Overall forecasting performance (MAE, percentage points).</p>
+  <table>
+    <tr><th>Evaluation</th><th>ML model</th><th>Comparator</th></tr>
+    <tr><td>Validation 2018–19</td><td>Random Forest 1.85</td><td>Naive 2.16</td></tr>
+    <tr><td>Test 2021–24</td><td>Gradient Boosting 3.47</td><td>Global mean 3.35</td></tr>
+    <tr><td>Backtest 2008–19</td><td>Gradient Boosting 2.80</td><td>Country mean 3.11</td></tr>
+    <tr><td>COVID-19 2020</td><td>All methods 8.65–9.61</td><td>–</td></tr>
+    <tr><td>IMF-matched (752)</td><td>Gradient Boosting 3.41</td><td>IMF 2.76</td></tr>
+  </table>
+</div>
+
+<figure>
+  <img src="fig1_mae.png" alt="Bar chart of MAE for the machine learning model and its comparator in four evaluations">
+  <figcaption><b>Fig. 1.</b> MAE (percentage points; values in Table 2) of the ML model against its comparator: Random Forest vs naive (validation), Gradient Boosting vs global mean (test) and country mean (backtest), and Gradient Boosting vs IMF. Lower is better.</figcaption>
+</figure>
+
+<p>Regional analysis shows that Gradient Boosting was the best method in Sub-Saharan Africa (MAE 2.022), while mean-based benchmarks performed best in the other six regions. To extend this comparison, we also report illustrative 2026 forecasts: India 6.5%, Pakistan 3.0%, Bangladesh 3.2% and Ireland 4.4% (Fig. 2), with 80% bands of about ±4 percentage points. Table 3 presents income-group results and 95% MAE confidence intervals from 1,000 country-cluster bootstrap repetitions.</p>
+
+<div class="tbl">
+  <p class="cap"><b>Table 3.</b> Lowest-MAE method by income group.</p>
+  <table>
+    <tr><th>Group</th><th>Method</th><th class="n">MAE</th><th class="n">RMSE</th><th class="n">95% CI</th><th class="n">N</th></tr>
+    <tr><td>Low</td><td>Ridge</td><td class="n">2.40</td><td class="n">4.88</td><td class="n">1.48–3.70</td><td class="n">21</td></tr>
+    <tr><td>Lower mid.</td><td>Grad. Boosting</td><td class="n">2.59</td><td class="n">4.42</td><td class="n">2.01–3.36</td><td class="n">47</td></tr>
+    <tr><td>Upper mid.</td><td>Global mean</td><td class="n">3.29</td><td class="n">5.52</td><td class="n">2.68–3.92</td><td class="n">59</td></tr>
+    <tr><td>High</td><td>Global mean</td><td class="n">3.81</td><td class="n">7.62</td><td class="n">2.91–5.22</td><td class="n">83</td></tr>
+  </table>
+  <p class="cap" style="margin-top:1mm">N = countries; 95% CI is for MAE.</p>
+</div>
+
+<figure class="wide">
+  <img src="regions_11pt.png" alt="Eight small charts of GDP growth from 2016 with 2026-27 forecasts and IMF projections for the World, European Union, United States, China, India, Pakistan, Bangladesh and Ireland">
+  <figcaption><b>Fig. 2.</b> Real GDP growth (%): our forecasts against IMF projections; subtitles give 2026 values. 2026 uses actual 2025 data; 2027 is a scenario on assumed 2026 inputs. World and EU are GDP (PPP)-weighted; bands show 80% of past country errors.</figcaption>
+</figure>
+
+<h2><span class="no">5</span>Analysis and discussion</h2>
+<p>The models performed better in stable periods but struggled during the 2009, 2020 and 2021 turning points. The backtest MAE difference had a 95% bootstrap interval of −0.48 to −0.17, while Random Forest seed variation (test MAE 3.47–3.52) prevented a clear distinction from Gradient Boosting. Large RMSE values in some groups indicate substantial forecast errors. Regional and income-group differences do not prove causality, particularly for small samples such as North America (three countries). Revised economic data may favour the models compared with historical IMF forecasts, which also gain from expert judgement and contemporaneous information. Current income classifications may not reflect historical conditions. Bootstrap intervals describe uncertainty conditional on the observed test period, not future shocks.</p>
+
+<h2><span class="no">6</span>Ethical and legal considerations</h2>
+<p>The study uses publicly available country-level data excluding personal information, limiting GDPR concerns. WDI data are licensed under CC BY 4.0 and are subject to third-party restrictions [16]. IMF data permit reuse with attribution and disclosure of material transformations [17]. Unequal data coverage and group sizes may introduce bias. Forecasts should communicate uncertainty and avoid misleading interpretations or stereotyping economies.</p>
+
+<h2><span class="no">7</span>Conclusion and future work</h2>
+<p>Machine learning improved GDP forecasting relative to simple benchmarks during stable periods but did not outperform the IMF overall. These findings suggest that Ridge and Gradient Boosting were useful for selected income groups, and that model suitability varies across economies. Further work should evaluate real-time dataset vintages, additional leading indicators and shock-sensitive models.</p>
+
+<section class="refs">
+  <p>Project code: <a href="https://github.com/farhana273/ml_assignment">github.com/farhana273/ml_assignment</a></p>
+  <h2>References</h2>
+  <ol>
+    <li>World Bank, World Development Indicators (WDI). https://datatopics.worldbank.org/world-development-indicators/</li>
+    <li>International Monetary Fund, World Economic Outlook (WEO) Database, October 2026 release. https://data.imf.org/Datasets/WEO</li>
+    <li>J.-K. Jung, M. Patnam, and A. Ter-Martirosyan, “An Algorithmic Crystal Ball: Forecasts-based on Machine Learning,” IMF Working Paper WP/18/230, 2018.</li>
+    <li>M. A. Bolhuis and B. Rayner, “Deus ex Machina? A Framework for Macro Forecasting with Machine Learning,” IMF Working Paper WP/20/45, 2020.</li>
+    <li>B. Chu and S. Qureshi, “Comparing Out-of-Sample Performance of Machine Learning Methods to Forecast U.S. GDP Growth,” <i>Computational Economics</i>, vol. 62, no. 4, pp. 1567–1609, 2023. doi: 10.1007/s10614-022-10312-z.</li>
+    <li>D. Kant, A. Pick, and J. de Winter, “Nowcasting GDP using machine learning methods,” <i>AStA Advances in Statistical Analysis</i>, vol. 109, no. 1, pp. 1–24, 2025. doi: 10.1007/s10182-024-00515-0.</li>
+    <li>O. Celasun, J. Lee, M. Mrkaic, and A. Timmermann, “An Evaluation of World Economic Outlook Growth Forecasts, 2004–17,” IMF Working Paper WP/21/216, Aug. 2021. doi: 10.5089/9781513587172.001.</li>
+    <li>F. Pedregosa et al., “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</li>
+    <li>A. E. Hoerl and R. W. Kennard, “Ridge regression: Biased estimation for nonorthogonal problems,” <i>Technometrics</i>, vol. 12, no. 1, pp. 55–67, 1970. doi: 10.1080/00401706.1970.10488634.</li>
+    <li>R. Tibshirani, “Regression shrinkage and selection via the lasso,” <i>Journal of the Royal Statistical Society: Series B (Methodological)</i>, vol. 58, no. 1, pp. 267–288, 1996. doi: 10.1111/j.2517-6161.1996.tb02080.x.</li>
+    <li>L. Breiman, “Random forests,” <i>Machine Learning</i>, vol. 45, no. 1, pp. 5–32, 2001. doi: 10.1023/A:1010933404324.</li>
+    <li>J. H. Friedman, “Greedy function approximation: A gradient boosting machine,” <i>The Annals of Statistics</i>, vol. 29, no. 5, pp. 1189–1232, 2001. doi: 10.1214/aos/1013203451.</li>
+    <li>P. J. Huber, “Robust estimation of a location parameter,” <i>The Annals of Mathematical Statistics</i>, vol. 35, no. 1, pp. 73–101, 1964. doi: 10.1214/aoms/1177703732.</li>
+    <li>B. Efron, “Bootstrap methods: Another look at the jackknife,” <i>The Annals of Statistics</i>, vol. 7, no. 1, pp. 1–26, 1979. doi: 10.1214/aos/1176344552.</li>
+    <li>International Monetary Fund, World Economic Outlook Historical Forecasts Database (WEOhistorical.xlsx), real GDP growth (ngdp_rpch) sheet. https://www.imf.org/en/Publications/WEO</li>
+    <li>World Bank, “Terms of Use for Datasets.” [Online]. Available: https://www.worldbank.org/ext/en/legal/terms-conditions/datasets [Accessed: Nov. 27, 2026].</li>
+    <li>International Monetary Fund, “IMF Copyright and Usage.” [Online]. Available: https://www.imf.org/en/about/copyright-and-terms [Accessed: Nov. 27, 2026].</li>
+  </ol>
+</section>
+
+</main>
+</body>
+</html>
